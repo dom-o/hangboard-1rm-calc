@@ -1,0 +1,36 @@
+body {
+  background: #222;
+  color: #fff;
+  font-family: sans-serif;
+  padding: 0rem 2rem;
+  line-height: 1.6;
+  max-width: 95vw;
+  overflow-x: auto;
+}
+p {
+  margin-bottom: 2rem;
+}
+table {
+  margin: 0rem 0rem 0.5rem;
+  border-collapse: collapse;
+}
+th {
+  border-bottom: solid #fff;
+}
+td {
+  border-left: solid #fff;
+}
+td, th {
+  padding: 0rem 1rem;
+  text-align: center;
+}
+.table-container {
+  margin: 0.5rem 0rem 2rem;
+  overflow-x: auto;
+}
+tr:nth-child(even) {
+  background: #3e3e3e
+}
+input[type=number], input[type=text] {
+  width: 5rem;
+}

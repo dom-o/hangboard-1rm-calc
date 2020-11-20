@@ -34,45 +34,31 @@ function quartic_eval(a,b,c,d,e,x) {
 
 function quartic_inverse(a,b,c,d,e,y) {
   const roots = [a1,a2,a3,a4]
-  let possibles = []
+  let actuals = []
   for (const root of roots) {
-    possibles.push(bigmath.round(root.evaluate({a:a,b:b,c:c,d:d,e:bigmath.bignumber(e-y)}), 4))
-  }
-  // console.log(y, possibles)
-  let actuals=[]
-  for (const x of possibles) {
-    if(bigmath.hasNumericValue(x)) {
-       actuals.push(bigmath.numeric(x, 'number'))
-    } else if (bigmath.typeOf(x) == 'Complex' && bigmath.equal(x.im,0)) {
-      actuals.push(x.re)
+    let possible = bigmath.round(root.evaluate({a:a,b:b,c:c,d:d,e:bigmath.bignumber(e-y)}), 4)
+    if(bigmath.hasNumericValue(possible)) {
+       actuals.push(bigmath.numeric(possible, 'number'))
+    } else if (bigmath.typeOf(possible) == 'Complex' && bigmath.equal(possible.im,0)) {
+      actuals.push(possible.re)
     }
   }
-  // console.log(y, actuals)
   return actuals
+
+  // let possibles = []
+  // for (const root of roots) {
+  //   possibles.push(bigmath.round(root.evaluate({a:a,b:b,c:c,d:d,e:bigmath.bignumber(e-y)}), 4))
+  // }
+  // // console.log(y, possibles)
+  // let actuals=[]
+  // for (const x of possibles) {
+  //   if(bigmath.hasNumericValue(x)) {
+  //      actuals.push(bigmath.numeric(x, 'number'))
+  //   } else if (bigmath.typeOf(x) == 'Complex' && bigmath.equal(x.im,0)) {
+  //     actuals.push(x.re)
+  //   }
+  // }
 }
-// function quartic_inverse(a,b,c,d,e,y) {
-//   const roots = [a1,a2,a3,a4]
-//   let actuals = []
-//   for (const root of roots) {
-//     let possible = (bigmath.round(root.evaluate({a:a,b:b,c:c,d:d,e:bigmath.bignumber(e-y)}), 4))
-//     if(bigmath.hasNumericValue(possible)) {
-//        actuals.push(bigmath.numeric(possible, 'number'))
-//     } else if (bigmath.typeOf(possible) == 'Complex' && bigmath.equal(possible.im,0)) {
-//       actuals.push(possible.re)
-//     }
-//   }
-//   // console.log(y, possibles)
-//   // let actuals=[]
-//   // for (const x of possibles) {
-//   //   if(bigmath.hasNumericValue(x)) {
-//   //      actuals.push(bigmath.numeric(x, 'number'))
-//   //   } else if (bigmath.typeOf(x) == 'Complex' && bigmath.equal(x.im,0)) {
-//   //     actuals.push(x.re)
-//   //   }
-//   // }
-//   // console.log(y, actuals)
-//   return actuals
-// }
 
 /**
   curve: x in mm (original function is cm but we convert), output in newtons
@@ -98,19 +84,15 @@ function inverse_scaled (a, b, c, d, e, max_y, y) {
 function solveForPercent(a,b,c,d,e,max_y, init_edge) {
   return curve_scaled(a,b,c,d,e,max_y, init_edge)
 }
-
 function solveForWeight(a,b,c,d,e,max_y, init_weight, init_edge, target_edge) {
   return curve_scaled(a,b,c,d,e,max_y, target_edge) * (init_weight / curve_scaled(a,b,c,d,e,max_y, init_edge))
 }
-
 function solveForEdge(a,b,c,d,e,max_y, init_weight, init_edge, target_weight) {
   return inverse_scaled(a,b,c,d,e,max_y, (target_weight * curve_scaled(a,b,c,d,e,max_y, init_edge)) / init_weight) //ARRAY
 }
-
 function solveForSmallest(a,b,c,d,e,max_y, init_weight, bodyweight, init_edge) {
   return inverse_scaled(a,b,c,d,e,max_y, bodyweight / ((init_weight + bodyweight) / curve_scaled(a,b,c,d,e,max_y, init_edge))) //ARRAY
 }
-
 function solveForMax(a,b,c,d,e,max_y, init_weight, init_edge) {
   return init_weight / curve_scaled(a,b,c,d,e,max_y, init_edge)
 }
@@ -188,5 +170,3 @@ const formulas = {
     }
   }
 }
-
-console.log(formulas['half-crimp'].solveForEdge(18,26,23))

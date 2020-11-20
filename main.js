@@ -99,8 +99,7 @@ const edge_eval = function() {
   inject(formulas, 'solveForEdge', '-edge-results', input, x=>math.round(x, 1),
     sensible_output() ? (init_weight, init_edge, target_weight, edge) => {return edge.map(x => x<0 ? 0 : x)} : null,
     sensible_output() ? (init_weight, init_edge, target_weight, formula_block) => {
-      if (init_weight==target_weight) { return [init_edge] }
-      else if (target_weight > formula_block['solveForMax'](init_weight, init_edge)) { return [0,0] }
+      if (target_weight > formula_block['solveForMax'](init_weight, init_edge)) { return [0,0] }
       else { return formula_block['solveForEdge'](init_weight, init_edge, target_weight) }
     } : null
   )

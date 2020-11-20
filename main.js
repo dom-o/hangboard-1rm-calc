@@ -134,7 +134,7 @@ smallest_form.onchange = smallest_eval
 const percent_eval = function() {
   init_edge = document.getElementById('init-edge-percent').value
 
-  inject(formulas, 'solveForPercent', '-percent-results', [init_edge], x=>math.round(x, 2),
+  inject(formulas, 'solveForPercent', '-percent-results', [init_edge], x=>math.round(x*100, 1)+'%',
     sensible_output() ? (init_edge, percent) => {return percent.map(x => x<0 ? 0 : x)} : null
   )
 }

@@ -10,16 +10,26 @@
   </head>
   <body>
     <h1>Hangboard Calculator and Equations</h1>
+    <p>
+      This is a set of calculators about hangboarding edge sizes, converting between them and the like. All the math is based on the equations in <a href="https://doi.org/10.1080/02640414.2012.658845">this study</a>; I write more about how I derived everything <a href="#">here</a>.
+      A couple use notes:
+      <ol>
+        <li>
+          According to the model there is an optimal, Platonic ideal edge on which everyone can pull the most weight (about 32mm), and after that making the edge bigger decreases the weight you can hang on it as much as does making it smaller. This means for every weight, there's two edges (one bigger than the optimal edge and one smaller) where you can hang that weight. That's why all the calculators that give you an edge size have two outputs.
+        </li>
+        <li>
+          Sometimes these equations will spit out answers that don't really make sense, e.g. negative edge depths. Checking 'sensible outputs' mitigates that as follows:
+          <ul>
+            <li>no negative values; outputs 0 instead.</li>
+            <li>when calculating weight: if input edge is the same as the target edge, output the input weight.</li>
+            <li>when calculating edge: if the target weight is more than your maximum possible weight, output 0.</li>
+          </ul>
+          Whether you set sensible outputs or not, sometimes the equations will still come up with no real values; in which case the output will just be 'X'.
+        </li>
+      </ol>
+    </p>
     <input type="radio" id="sensible" name="calc_output" value="sensible" checked><label for="sensible">sensible outputs</label>
     <input type="radio" id="raw" name="calc_output" value="raw"><label for="raw">raw outputs</label>
-    <p>
-      Sometimes these equations evaulate to something that doesn't really make sense, e.g. negative weights.<br>
-      Sensible outputs mitigates that as follows:<br>
-        &nbsp;&nbsp;-no negative values; outputs 0 instead.<br>
-        &nbsp;&nbsp;-when calculating weight: if input edge is the same as the target edge, output the input weight.<br>
-        &nbsp;&nbsp;-when calculating edge: if the target weight is more than the maximum possible weight, output 0.<br>
-      Whether you set sensible outputs or not, sometimes the equations will come up with no real values; in which case the output will just be 'X'.
-    </p>
 
     <form id="solve-for-percent" autocomplete="off">
       <h3>What percentage of my max weight can I hang on a <input type="number" min="0" step="any" value="" required id="init-edge-percent"> mm edge?</h3>
@@ -72,13 +82,13 @@
         <thead><tr><th scope="col"></th><th scope="col" style="border-left:solid #fff;">Average</th><th scope="col" style="border-left:solid #fff;">Half crimp</th><th scope="col" style="border-left:solid #fff;">Full crimp</th><th scope="col" style="border-left:solid #fff;">Slope</th></tr>
         </thead>
         <tbody>
-          <tr><th scope="row" style="border-bottom:none;">Weight</th><td id="avg-max-results" style="border-left:solid #fff;">-</td><td id="half-crimp-max-results-1" style="border-left:solid #fff;">-</td><td id="full-crimp-max-results-1" style="border-left:solid #fff;">-</td><td id="slope-max-results-1" style="border-left:solid #fff;">-</td></tr></tr><tr><th scope="row" style="border-bottom:none; border-top:thin solid #fff;">Edge (mm)</th><td style="border-left:solid #fff; border-top:thin solid #fff;">24.6</td><td style="border-left:solid #fff; border-top:thin solid #fff;">32.6</td><td style="border-left:solid #fff; border-top:thin solid #fff;">26.2</td><td style="border-left:solid #fff; border-top:thin solid #fff;">39.5</td></tr>
+          <tr><th scope="row" style="border-bottom:none;">Weight</th><td id="avg-max-results" style="border-left:solid #fff;">-</td><td id="half-crimp-max-results-1" style="border-left:solid #fff;">-</td><td id="full-crimp-max-results-1" style="border-left:solid #fff;">-</td><td id="slope-max-results-1" style="border-left:solid #fff;">-</td></tr></tr><tr><th scope="row" style="border-bottom:none; border-top:thin solid #fff;">Edge (mm)</th><td style="border-left:solid #fff; border-top:thin solid #fff;">32.8</td><td style="border-left:solid #fff; border-top:thin solid #fff;">32.6</td><td style="border-left:solid #fff; border-top:thin solid #fff;">26.2</td><td style="border-left:solid #fff; border-top:thin solid #fff;">39.5</td></tr>
         </tbody>
       </table>
     </div>
 
     <form id="solve-for-smallest" autocomplete="off">
-      <h3>If I can hang with <input type="number" min="0" step="any" value="" required id="init-weight-smallest"> weight added to <input type="number" min="0" step="any" value="" required id="bodyweight-smallest"> bodyweight on a <input type="number" min="0" step="any" value="" required id="init-edge-smallest"> mm edge, what is the smallest edge I can hang at just bodyweight?</h3>
+      <h3>If I can hang with <input type="number" min="0" step="any" value="" required id="init-weight-smallest"> weight added to <input type="number" min="0" step="any" value="" required id="bodyweight-smallest"> bodyweight on a <input type="number" min="0" step="any" value="" required id="init-edge-smallest"> mm edge, what is the smallest/largest edge I can hang at just bodyweight?</h3>
     </form>
     <div class="table-container">
       <table id="smallest-results">

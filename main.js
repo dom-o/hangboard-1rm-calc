@@ -9,27 +9,8 @@ const sensible_output = function() {
 
 var init_weight, init_edge, target_weight, target_edge, bodyweight, head_html, body_html
 
-// function draw_results_tables() {
-//   let results_tables = [document.getElementById('edge-results'),  document.getElementById('smallest-results')]
-//   for (const table of results_tables) {
-//     head_html = '<thead><tr><th scope="col">Average</th>'
-//     body_html = '<tbody><tr><td id="Average-'+ table.id +'">-</td>'
-//     for (key of Object.keys(formulas)) {
-//         head_html += '<th scope="col" colspan="2">' + key + '</th>'
-//         body_html += '<td id="' + key+'-'+table.id + '-1">-</td>'
-//         body_html += '<td id="' + key+'-'+table.id + '-2">-</td>'
-//       }
-//
-//     head_html += '</tr></thead>'
-//     body_html += '</tr></tbody>'
-//
-//     table.innerHTML = head_html + body_html
-//   }
-// }
-
 function inject(formulas, solveFunction, elementSuffix, input, roundFunction, regulateFunction=null, preEval=null) {
   let avg = 0, length=0, out;
-  let avg_valid=true
 
   input = input.map(x => Number.parseFloat(x))
   if(input.some(x => Number.isNaN(x))) {
@@ -63,15 +44,14 @@ function inject(formulas, solveFunction, elementSuffix, input, roundFunction, re
           y++
         }
       } else {
-        avg_valid = false
         document.getElementById(key+elementSuffix+'-1').innerText = 'X'
-        console.log(elementSuffix)
         if (elementSuffix == '-edge-results' || elementSuffix == '-smallest-results'){
           document.getElementById(key+elementSuffix+'-2').innerText = 'X'
         }
       }
     }
-    if(avg_valid) { document.getElementById('avg'+elementSuffix).innerText = roundFunction(avg/length) }
+    avg = roundFunction(avg/length)
+    if(!Number.isNaN(avg)) { document.getElementById('avg'+elementSuffix).innerText = avg }
     else { document.getElementById('avg'+elementSuffix).innerText = 'X' }
   }
 }
